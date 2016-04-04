@@ -54,7 +54,7 @@ namespace putslam {
 
             /// Returns the current 2D image
             virtual const SensorFrame& getSensorFrame(void) {
-                if (mode==MODE_BUFFER){
+                if ((mode == MODE_BUFFER) && (!sensorFrames.empty())) {
                     mtx.lock();
                     sensorFrame = sensorFrames.front();
                     sensorFrames.pop();

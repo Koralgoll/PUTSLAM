@@ -57,16 +57,17 @@ class DepthSensorModel {
             distVarCoefs{-8.9997e-06, 3.069e-003, 3.6512e-006, -0.0017512e-3}{
         }
         Config(std::string configFilename){
-            tinyxml2::XMLDocument config;
+            // Get sensor model config (grabber)
+            tinyxml2::XMLDocument sensorCfg;
             std::string filename = "../../resources/" + configFilename;
-            config.LoadFile(filename.c_str());
-            if (config.ErrorID())
-                std::cout << "unable to load sensor config file: error = " << config.ErrorID() << std::endl;;
+            sensorCfg.LoadFile(filename.c_str());
+            if (sensorCfg.ErrorID())
+                std::cout << "unable to load sensor config file: error = " << sensorCfg.ErrorID() << std::endl;;
 
 			// Get dataset config
 			std::string datasetCfgFilename =
-					config.FirstChildElement("Model")->Attribute("datasetFile");
-			config.FirstChildElement("Model")->QueryIntAttribute("verbose", &verbose);
+					sensorCfg.FirstChildElement("Model")->Attribute("datasetFile");
+			sensorCfg.FirstChildElement("Model")->QueryIntAttribute("verbose", &verbose);
 			tinyxml2::XMLDocument datasetCfg;
 			filename = "../../resources/" + datasetCfgFilename;
 			datasetCfg.LoadFile(filename.c_str());
@@ -75,22 +76,22 @@ class DepthSensorModel {
 						<< configFilename << std::endl;
 			}
 
-            tinyxml2::XMLElement * model = datasetCfg.FirstChildElement( "Model" );
-            model->FirstChildElement( "focalLength" )->QueryDoubleAttribute("fu", &focalLength[0]);
-            model->FirstChildElement( "focalLength" )->QueryDoubleAttribute("fv", &focalLength[1]);
-            model->FirstChildElement( "focalAxis" )->QueryDoubleAttribute("Cu", &focalAxis[0]);
-            model->FirstChildElement( "focalAxis" )->QueryDoubleAttribute("Cv", &focalAxis[1]);
-            model->FirstChildElement( "variance" )->QueryDoubleAttribute("sigmaU", &varU);
-            model->FirstChildElement( "variance" )->QueryDoubleAttribute("sigmaV", &varV);
-            model->FirstChildElement( "varianceDepth" )->QueryDoubleAttribute("c3", &distVarCoefs[0]);
-            model->FirstChildElement( "varianceDepth" )->QueryDoubleAttribute("c2", &distVarCoefs[1]);
-            model->FirstChildElement( "imageSize" )->QueryIntAttribute("sizeU", &imageSize[0]);
-            model->FirstChildElement( "imageSize" )->QueryIntAttribute("sizeV", &imageSize[1]);
-            model->FirstChildElement( "normalModel" )->QueryDoubleAttribute("scaleUncertaintyNormal", &scaleUncertaintyNormal);
-            model->FirstChildElement( "gradientModel" )->QueryDoubleAttribute("scaleUncertaintyGradient", &scaleUncertaintyGradient);
+            tinyxml2::XMLElement *datasetModel = datasetCfg.FirstChildElement("Model" );
+            datasetModel->FirstChildElement("focalLength" )->QueryDoubleAttribute("fu", &focalLength[0]);
+            datasetModel->FirstChildElement("focalLength" )->QueryDoubleAttribute("fv", &focalLength[1]);
+            datasetModel->FirstChildElement("focalAxis" )->QueryDoubleAttribute("Cu", &focalAxis[0]);
+            datasetModel->FirstChildElement("focalAxis" )->QueryDoubleAttribute("Cv", &focalAxis[1]);
+            datasetModel->FirstChildElement("variance" )->QueryDoubleAttribute("sigmaU", &varU);
+            datasetModel->FirstChildElement("variance" )->QueryDoubleAttribute("sigmaV", &varV);
+            datasetModel->FirstChildElement("varianceDepth" )->QueryDoubleAttribute("c3", &distVarCoefs[0]);
+            datasetModel->FirstChildElement("varianceDepth" )->QueryDoubleAttribute("c2", &distVarCoefs[1]);
+            datasetModel->FirstChildElement("imageSize" )->QueryIntAttribute("sizeU", &imageSize[0]);
+            datasetModel->FirstChildElement("imageSize" )->QueryIntAttribute("sizeV", &imageSize[1]);
+            datasetModel->FirstChildElement("normalModel" )->QueryDoubleAttribute("scaleUncertaintyNormal", &scaleUncertaintyNormal);
+            datasetModel->FirstChildElement("gradientModel" )->QueryDoubleAttribute("scaleUncertaintyGradient", &scaleUncertaintyGradient);
             datasetCfg.FirstChildElement( "datasetPath" )->QueryDoubleAttribute("depthImageScale", &depthImageScale);
 
-            tinyxml2::XMLElement * posXML = config.FirstChildElement( "pose" );
+            tinyxml2::XMLElement * posXML = sensorCfg.FirstChildElement("pose" );
             double query[4];
             posXML->QueryDoubleAttribute("qw", &query[0]); posXML->QueryDoubleAttribute("qx", &query[1]); posXML->QueryDoubleAttribute("qy", &query[2]); posXML->QueryDoubleAttribute("qz", &query[3]);
             double queryPos[4];

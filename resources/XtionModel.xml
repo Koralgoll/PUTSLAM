@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
   <!-- Xtion Model-->
-  <Model>
+  <Model verbose="1" datasetFile="datasetConfig/Kinect_conf_1.xml">
     <focalLength fu="582.64" fv="586.97"></focalLength>
     <focalAxis Cu="320.17" Cv="260.0"></focalAxis>
     <variance sigmaU="1.1046" sigmaV="0.64160"></variance>

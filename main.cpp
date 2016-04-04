@@ -39,6 +39,8 @@ unsigned const max_tracking_duration = 6;//seconds
 
 int main()
 {
+    cout << "Start demo" << endl;
+
     try {
         using namespace putslam;
 
@@ -62,11 +64,11 @@ int main()
         else // Default
             grabber = createGrabberKinect();
 
-        Mat33 cov;
-        DepthSensorModel KinectModel("../../resources/KinectModel.xml");
-        KinectModel.computeCov(80, 360, 0.5837, cov);
-        Eigen::Vector3d vec;
-        KinectModel.getPoint(377.177, 112.906, 6.468, vec);
+//        Mat33 cov;
+//        DepthSensorModel KinectModel("KinectModel.xml");
+//        KinectModel.computeCov(80, 360, 0.5837, cov);
+//        Eigen::Vector3d vec;
+//        KinectModel.getPoint(377.177, 112.906, 6.468, vec);
 
         // create objects and print configuration
         cout << "Current grabber: " << grabber->getName() << std::endl;
