@@ -91,8 +91,8 @@ int main()
                 tracker->reset();
             }
             if (chrono::duration_cast<chrono::duration<unsigned> >(chrono::system_clock::now() - start).count()>max_tracking_duration){
-                thread_poseGraph->join();
-                thread_globalGraph->join();
+//                thread_poseGraph->join();
+//                thread_globalGraph->join();
                 break;
             }
         }

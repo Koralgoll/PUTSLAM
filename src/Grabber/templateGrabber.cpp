@@ -2,26 +2,22 @@
 #include <stdexcept>
 #include <chrono>
 #include <thread>
-#include "../../include/Grabber/kinectGrabber.h"
+#include "../../include/Grabber/templateGrabber.h"
 
 using namespace putslam;
 
 /// A single instance of Kinect grabber
-KinectGrabber::Ptr grabberK;
+TemplateGrabber::Ptr grabberK;
 
-KinectGrabber::KinectGrabber(void) : Grabber("Kinect Grabber", TYPE_PRIMESENSE, MODE_BUFFER) {
-
-}
-
-const std::string& KinectGrabber::getName() const {
+const std::string& TemplateGrabber::getName() const {
 	return name;
 }
 
-const PointCloud& KinectGrabber::getCloud(void) const {
+const PointCloud& TemplateGrabber::getCloud(void) const {
     return cloud;
 }
 
-bool KinectGrabber::grab(void) {
+bool TemplateGrabber::grab(void) {
     Point3D point;
     point.r = 255; point.g = 0; point.b = 0; point.a = 255;
     point.x = 1.2; point.y = 3.4; point.z = 5.6;
@@ -31,26 +27,26 @@ bool KinectGrabber::grab(void) {
 }
 
 /// run grabber thread
-void KinectGrabber::calibrate(void) {
+void TemplateGrabber::calibrate(void) {
 
 }
 
-int KinectGrabber::grabberClose(){
+int TemplateGrabber::grabberClose(){
     return 0;
 }
 
-Eigen::Matrix4f KinectGrabber::getStartingSensorPose()
+Eigen::Matrix4f TemplateGrabber::getStartingSensorPose()
 {
 	Eigen::Matrix4f::Identity();
 }
 
-putslam::Grabber* putslam::createGrabberKinect(void) {
-    grabberK.reset(new KinectGrabber());
+putslam::Grabber* putslam::createGrabberTemplate(void) {
+    grabberK.reset(new TemplateGrabber());
     return grabberK.get();
 }
 
-putslam::Grabber* putslam::createGrabberKinect(std::string configFile, Grabber::Mode mode) {
-    grabberK.reset(new KinectGrabber(configFile, mode));
+putslam::Grabber* putslam::createGrabberTemplate(std::string configFile) {
+    grabberK.reset(new TemplateGrabber(configFile));
     return grabberK.get();
 }
 

@@ -32,8 +32,7 @@ class KinectGrabber : public Grabber {
         KinectGrabber(void);
 
         /// Construction
-        KinectGrabber(std::string modelFilename, Mode _model) : Grabber("Kinect Grabber", TYPE_PRIMESENSE, _model), model(modelFilename){
-        }
+        KinectGrabber(std::string modelFilename, Mode _model);
 
         /// Name of the grabber
         virtual const std::string& getName() const;

@@ -118,20 +118,24 @@ int XtionGrabber::initOpenNI(){
             return 2;
         }
     }
-    listDepthVideoMode();
-    rc = depth.setVideoMode(depthSensorInfo->getSupportedVideoModes()[depthMode]); //best option 4
-    if (rc != openni::STATUS_OK) {
-        printf("Couldn't set proper Depth Video Mode\n%s\n",openni::OpenNI::getExtendedError());
-        return 2;
-    }
+
+    // Set Depth Video Mode
+//    listDepthVideoMode();
+//    rc = depth.setVideoMode(depthSensorInfo->getSupportedVideoModes()[depthMode]); //best option 4
+//    if (rc != openni::STATUS_OK) {
+//        printf("Couldn't set proper Depth Video Mode\n%s\n",openni::OpenNI::getExtendedError());
+//        return 2;
+//    }
+
+    // Set Color Video Mode
     //Importand otherwise error !!!
     //required pause for about 1 second to properly set the Video Modes, otherwise core dump error
-    listColorVideoMode(); //this line gives a required pause
-    rc = color.setVideoMode(colorSensorInfo->getSupportedVideoModes()[colorMode]); //best option 9
-    if (rc != openni::STATUS_OK) {
-        printf("Couldn't set proper Color Video Mode\n%s\n",openni::OpenNI::getExtendedError());
-        return 2;
-    }
+//    listColorVideoMode(); //this line gives a required pause
+//    rc = color.setVideoMode(colorSensorInfo->getSupportedVideoModes()[colorMode]); //best option 9
+//    if (rc != openni::STATUS_OK) {
+//        printf("Couldn't set proper Color Video Mode\n%s\n",openni::OpenNI::getExtendedError());
+//        return 2;
+//    }
 }
 
 int XtionGrabber::acquireDepthFrame(cv::Mat &m){
@@ -189,13 +193,13 @@ bool XtionGrabber::grab(void) {
 //    point.x = 1.2; point.y = 3.4; point.z = 5.6;
 //    cloud.push_back(point);
 //    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-      mtx.lock();
+//      mtx.lock();
       if(acquireDepthFrame(this->sensorFrame.depthImage)) throw 1;
       if(acquireColorFrame(this->sensorFrame.rgbImage)) throw 2;
       else if (mode==MODE_BUFFER) {
           sensorFrames.push(sensorFrame);
       }
-      mtx.unlock();
+//      mtx.unlock();
       return true;
 }
 

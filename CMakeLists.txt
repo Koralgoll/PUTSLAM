@@ -25,7 +25,7 @@ option(BUILD_PUTSLAM_UTILITIES "Build PUTSLAM Utilities library" ON)
 mark_as_advanced(BUILD_PUTSLAM_UTILITIES)
 option(BUILD_PUTSLAM_GRABBER "Build PUTSLAM Grabber library" ON)
 mark_as_advanced(BUILD_PUTSLAM_GRABBER)
-option(BUILD_PUTSLAM_GRABBER_PTGREY "Build PUTSLAM Grabber PointGrey library" OFF)
+option(BUILD_PUTSLAM_GRABBER_PTGREY "Build PUTSLAM Grabber PointGrey library" ON)
 mark_as_advanced(BUILD_PUTSLAM_GRABBER_PTGREY)
 option(BUILD_PUTSLAM_TRACKER "Build PUTSLAM Tracker library" ON)
 mark_as_advanced(BUILD_PUTSLAM_TRACKER)
@@ -75,10 +75,13 @@ mark_as_advanced(BUILD_PUTSLAM_DEMO_VISUALIZER)
 
 LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules)
 
+# Add OpenCV 3 package
+SET(CMAKE_PREFIX_PATH "/home/koralgoll/Libs/opencv/opencv-latest/build")
+
 # Boost
 #FIND_PACKAGE(Boost COMPONENTS system filesystem thread)
 # OpenCV
-FIND_PACKAGE(OpenCV REQUIRED)
+FIND_PACKAGE(OpenCV 3 REQUIRED)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 # PCL
 #FIND_PACKAGE(PCL REQUIRED)

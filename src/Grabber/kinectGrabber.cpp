@@ -14,6 +14,15 @@ KinectGrabber::KinectGrabber(void) : Grabber("Kinect Grabber", TYPE_PRIMESENSE, 
 
 }
 
+KinectGrabber::KinectGrabber(std::string modelFilename, Mode _model) : Grabber("Kinect Grabber", TYPE_PRIMESENSE, _model), model(modelFilename){
+    tinyxml2::XMLDocument config;
+    std::string filename = "../../resources/" + modelFilename;
+    config.LoadFile(filename.c_str());
+    if (config.ErrorID()) {
+        std::cout << "unable to load Xtion config file.\n";
+    }
+}
+
 const std::string& KinectGrabber::getName() const {
 	return name;
 }

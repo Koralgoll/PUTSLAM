@@ -14,24 +14,24 @@
 
 namespace putslam {
 	/// create a single grabber (Kinect)
-	Grabber* createGrabberKinect(void);
-    Grabber* createGrabberKinect(std::string configFile);
+	Grabber* createGrabberTemplate(void);
+    Grabber* createGrabberTemplate(std::string configFile);
 };
 
 using namespace putslam;
 
 /// Grabber implementation
-class KinectGrabber : public Grabber {
+class TemplateGrabber : public Grabber {
     public:
 
         /// Pointer
-        typedef std::unique_ptr<KinectGrabber> Ptr;
+        typedef std::unique_ptr<TemplateGrabber> Ptr;
 
         /// Construction
-        KinectGrabber(void);
+        TemplateGrabber(void) : Grabber("Kinect Grabber", TYPE_PRIMESENSE, MODE_BUFFER) {};
 
         /// Construction
-        KinectGrabber(std::string modelFilename) : Grabber("Kinect Grabber", TYPE_PRIMESENSE), model(modelFilename){
+        TemplateGrabber(std::string modelFilename) : Grabber("Kinect Grabber", TYPE_PRIMESENSE, Mode::MODE_BUFFER), model(modelFilename){
         }
 
         /// Name of the grabber
@@ -53,6 +53,8 @@ class KinectGrabber : public Grabber {
         Eigen::Matrix4f getStartingSensorPose();
 
     private:
+        // Sensor model
+        DepthSensorModel model;
 };
 
 #endif // KINECT_GRABBER_H_INCLUDED
